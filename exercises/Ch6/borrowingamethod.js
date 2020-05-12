@@ -1,0 +1,1 @@
+console.log(map.__proto__.hasOwnProperty("name"))
