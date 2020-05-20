@@ -53,6 +53,7 @@ class VillageState {
         return new VillageState(destination, parcels);
       }
     }
+    
   }
 
   let first = new VillageState(
@@ -83,6 +84,7 @@ class VillageState {
 
  function runRobot(state, robot, memory) {
     for (let turn = 0;; turn++) {
+
       if (state.parcels.length == 0) {
         console.log(`Done in ${turn} turns`);
         break;
@@ -143,4 +145,16 @@ class VillageState {
   }
 
 
- runRobot(VillageState.random(), goalOrientedRobot);
+  
+module.exports.VillageState = new VillageState()
+exports.VillageState.random = VillageState.random
+exports.roads = roads
+exports.roadGraph = roadGraph
+exports.randomPick = randomPick
+exports.runRobot = runRobot
+exports.goalOrientedRobot = goalOrientedRobot
+exports.findRoute = findRoute
+exports.buildGraph = buildGraph
+
+
+ 
