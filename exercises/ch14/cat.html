@@ -1,0 +1,42 @@
+<!doctype html>
+
+<head>
+
+  <style>
+    body {
+      min-height: 200px
+    }
+    #cat{
+      position: absolute
+    }
+    #midget{
+      position: absolute
+    }
+  </style>
+
+</head>
+
+<body>
+
+  <img src="midget.png" id="midget">
+  <img src="pusheen.png" id="cat">
+
+  <script>
+    let cat = document.querySelector("#cat");
+    let midget = document.querySelector("#midget");
+
+    let angle = 0;
+    let lastTime = null;
+    function animate(time) {
+      if (lastTime != null) angle += (time - lastTime) * 0.001;
+      lastTime = time;
+      cat.style.top = (Math.sin(angle) * 50 + 50) + "px";
+      cat.style.left = (Math.cos(angle) * 200 + 250) + "px";
+      midget.style.top = (Math.sin(angle) * 50 + 50) + "px";
+      midget.style.left = (Math.cos(angle) * 50 + 50) + "px";
+
+      requestAnimationFrame(animate);
+    }
+    requestAnimationFrame(animate);
+  </script>
+</body>
