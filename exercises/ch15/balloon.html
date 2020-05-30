@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+
+<head>
+    <style>
+        #balloon {
+            font-size: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <p id="balloon">🎈</p>
+
+    <script>
+        let balloon = document.getElementById("balloon")
+
+        function makebigger(){
+            var style = window.getComputedStyle(balloon, null).getPropertyValue('font-size');
+            var fontSize = parseFloat(style);
+            if (fontSize >= 50) {
+                    balloon.textContent = "💥"
+                    window.removeEventListener("keydown", choose);
+                }
+                else {
+                    balloon.style.fontSize = (fontSize + 10) + 'px'
+                }
+        }
+        function makesmaller(){
+            var style = window.getComputedStyle(balloon, null).getPropertyValue('font-size');
+            var fontSize = parseFloat(style);
+            balloon.style.fontSize = (fontSize - 10) + 'px'
+
+        }
+
+        function choose(event){
+            if (event.key == "ArrowUp"){
+                makebigger()
+            }
+            else if (event.key == "ArrowDown"){
+                makesmaller()
+            }
+        }
+
+        window.addEventListener("keydown", choose)
+
+
+    </script>
+
+
+</body>

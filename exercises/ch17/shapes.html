@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+
+<head>
+
+</head>
+
+<body>
+    <canvas width="600" height="200"></canvas>
+    <script>
+        let cx = document.querySelector("canvas").getContext("2d");
+
+        //trapezioid
+
+        cx.beginPath();
+        cx.moveTo(200, 10);
+        cx.lineTo(250, 10);
+        cx.lineTo(260, 50);
+        cx.lineTo(190, 50)
+        cx.fill();
+
+        //square
+
+        cx.rotate(45 * Math.PI / 180)
+        cx.fillStyle = "red";
+        cx.fillRect(60, -55, 50, 50);
+
+        cx.rotate(-45 * Math.PI / 180)
+
+        //zigzag
+
+        cx.beginPath()
+        cx.moveTo(300, 10)
+        let y = 10
+        for (let i = 0; i < 5; i++) {
+            y += 5
+            cx.lineTo(325, y)
+            y += 5
+            cx.lineTo(300, y)
+        }
+        cx.stroke()
+
+        //spiral
+
+        let radius = 50
+        let xCenter = 400 + radius
+        let yCenter = 10 + radius;
+        cx.beginPath();
+        cx.moveTo(xCenter, yCenter);
+        for (let i = 0; i < 200; i++) {
+            let angle = i * Math.PI / 30;
+            let range = radius * i / 200;
+            cx.lineTo(xCenter + Math.cos(angle) * range, yCenter + Math.sin(angle) * range);
+        }
+        cx.stroke();
+
+
+        //star
+
+
+        let radius2 = 50
+        let xCenter2 = 500 + radius2
+        let yCenter2 = 10 + radius2;
+        cx.beginPath();
+        cx.moveTo(xCenter2 + radius2, yCenter2);
+        for (let i = 1; i <= 8; i++) {
+            let angle = i * Math.PI / 4;
+            cx.quadraticCurveTo(xCenter2, yCenter2,
+                xCenter2 + Math.cos(angle) * radius2,
+                yCenter2 + Math.sin(angle) * radius2);
+        }
+        cx.fillStyle = "red";
+        cx.fill();
+
+
+
+    </script>
+
+</body>
