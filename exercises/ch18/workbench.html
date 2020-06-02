@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+
+<head>
+
+</head>
+
+<body>
+    <textarea id="code">return "hi";</textarea>
+    <button id="button" onclick="LetsRunItBoye()">Run</button>
+    <pre id="output"></pre>
+
+    <script>
+
+        function LetsRunItBoye() {
+            let code = document.getElementById("code").value
+            try {
+                let output = Function(code)()
+                field = document.getElementById("output").innerHTML = String(output)
+            }
+            catch (e) {
+                field = document.getElementById("output").innerHTML = e
+            }
+        }
+    </script>
+</body>
+
+</html>
