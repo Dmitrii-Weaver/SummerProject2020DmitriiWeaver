@@ -19,7 +19,7 @@ export function createPlayer() {
 
 
             player.draw = function drawplayer(context) {
-                sprite.draw('idle', context, this.pos.x, this.pos.y)
+                sprite.draw('idle', context, 0,0)
             }
 
             return player
