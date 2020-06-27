@@ -2,11 +2,12 @@
 import Compositor from './Compositor.js'
 import TileCollider from './tilecollider.js'
 import {Matrix} from './math.js'
-import { loadPlayerSprite } from './Sprites.js'
+
 
 export default class Level {
     constructor(){
-        this.gravity = 2000
+        this.gravity = 1500
+        this.totalTime = 0
 
         this.comp = new Compositor()
         this.entities = new Set()
@@ -28,5 +29,6 @@ export default class Level {
 
             entity.vel.y += this.gravity * deltaTime
         })
+        this.totalTime += deltaTime
     }
 }

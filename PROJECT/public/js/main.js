@@ -2,9 +2,7 @@ import Camera from './Camera.js'
 import Timer from './timer.js'
 import { loadLevel } from './loaders.js';
 import { createPlayer } from './entities.js';
-import{createCollisionLayer, createCameraLayer} from './layers.js'
 import {setupKeyboard} from './input.js'
-import {setupMouseControl} from './debug.js'
 
 
 
@@ -33,19 +31,15 @@ Promise.all([
 
 
         player.pos.set(64, 180)
-        createCollisionLayer(level)
 
         level.entities.add(player)
-        level.comp.layers.push(
-            createCollisionLayer(level),
-            createCameraLayer(camera));
-        
+
 
 
         const input = setupKeyboard(player)
         input.listenTo(window)
 
-        setupMouseControl(canvas, player,camera)
+        
 
         const timer = new Timer(1 / 60)
 
@@ -53,6 +47,11 @@ Promise.all([
 
 
             level.update(deltaTime)
+
+            if (player.pos.x > 100){
+                camera.pos.x = player.pos.x - 100
+            }
+
             level.comp.draw(context, camera)
 
 

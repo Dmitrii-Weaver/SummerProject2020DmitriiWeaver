@@ -11,19 +11,22 @@ export function createBackgroundLayer(level, sprites) {
 
     let startIndex
     let endIndex
-    function redraw(drawFrom, drawTo){
-        if(drawFrom === startIndex && drawTo ===endIndex){
-            return
-        }
+    function redraw(drawFrom, drawTo) {
+
 
         startIndex = drawFrom
         endIndex = drawTo
         console.log('redrawing')
-        for (let x = startIndex; x <= endIndex; x++){
+        for (let x = startIndex; x <= endIndex; x++) {
             const col = tiles.grid[x]
-            if (col){
-                col.forEach((tile,y) => {
-                    sprites.drawTile(tile.name,context,x-startIndex,y)
+            if (col) {
+                col.forEach((tile, y) => {
+                    if (sprites.animations.has(tile.name)) {
+                        sprites.drawAnim(tile.name, context, x - startIndex, y, level.totalTime)
+                    }
+                    else {
+                        sprites.drawTile(tile.name, context, x - startIndex, y)
+                    }
                 })
             }
         }
@@ -44,8 +47,8 @@ export function createBackgroundLayer(level, sprites) {
 
         context.drawImage(
             buffer,
-             -camera.pos.x % 16,
-              -camera.pos.y)
+            -camera.pos.x % 16,
+            -camera.pos.y)
     }
 }
 
