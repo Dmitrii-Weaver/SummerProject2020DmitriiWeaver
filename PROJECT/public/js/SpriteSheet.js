@@ -49,8 +49,8 @@ export default class SpriteSheet {
         const animation = this.animations.get(name)
         this.drawTile(animation(distance), context,x,y)
     }
-    draw(name, context, x, y, flip=false) {
-        const buffer = this.tiles.get(name)[flip ? 1: 0];
+    draw(name, context, x, y, flip = false) {
+        const buffer = this.tiles.get(name)[flip ? 1 : 0];
         context.drawImage(buffer, x, y);
     }
 

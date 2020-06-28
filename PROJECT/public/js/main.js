@@ -1,6 +1,6 @@
 import Camera from './Camera.js'
 import Timer from './timer.js'
-import { loadLevel } from './loaders.js';
+import { loadLevel } from './loaders/levelloader.js';
 import { createPlayer } from './entities.js';
 import {setupKeyboard} from './input.js'
 
