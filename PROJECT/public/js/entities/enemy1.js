@@ -1,5 +1,7 @@
 import Entity, {Sides} from '../entity.js';
 import { loadSpriteSheet } from '../loaders.js';
+import PendulumWalk from   '../traits/PendulumWalk.js'
+
 
 export function loadEnemy1(){
     return loadSpriteSheet('enemy1')
@@ -14,18 +16,7 @@ function createEnemy1Factory(sprite){
     return function createEnemy1(){
         const enemy1 = new Entity()
         enemy1.size.set(16,16)
-        enemy1.addTrait({
-            NAME:'walk',
-            speed: -30,
-            obstruct(enemy1, side){
-                if(side === Sides.LEFT || side===Sides.RIGHT){
-                   this.speed = -this.speed 
-                }
-            },
-            update(enemy1){
-                enemy1.vel.x =  this.speed
-            }
-        })
+        enemy1.addTrait(new PendulumWalk())
 
         enemy1.draw = drawEnemy1
         return enemy1

@@ -82,13 +82,21 @@ export function createCollisionLayer(level) {
         context.strokeStyle = 'blue';
         resolvedTiles.forEach((value, x, y) => {
             context.beginPath();
-            context.rect(x * tileSize - camera.pos.x, y * tileSize - camera.pos.y, tileSize, tileSize);
+            context.rect(
+                x * tileSize - camera.pos.x,
+                 y * tileSize - camera.pos.y,
+                  tileSize,
+                   tileSize);
             context.stroke();
         });
         context.strokeStyle = 'red';
         level.entities.forEach(entity => {
             context.beginPath();
-            context.rect(entity.pos.x - camera.pos.x, entity.pos.y - camera.pos.y, entity.size.x, entity.size.y);
+            context.rect(
+                entity.bounds.left - camera.pos.x,
+                 entity.bounds.top - camera.pos.y ,
+                  entity.size.x,
+                   entity.size.y);
             context.stroke();
         })
 
