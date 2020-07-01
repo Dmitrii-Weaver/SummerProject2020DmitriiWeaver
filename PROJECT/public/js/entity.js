@@ -13,13 +13,18 @@ export class Trait{
         this.NAME = name
     }
 
+    collides(us, them){
+  
+    }
+
     obstruct(){
 
     }
 
+
     update(){
-        console.warn('unhandled update call in Trait')
-    }
+
+   }
 }
 
 export default class Entity {
@@ -41,7 +46,9 @@ export default class Entity {
     }
 
     collides(candidate){
-        console.log('touched ', candidate)
+        this.traits.forEach(trait =>{
+            trait.collides(this, candidate)
+        })
     }
 
     obstruct(side){
@@ -49,10 +56,13 @@ export default class Entity {
             trait.obstruct(this, side)
         })
     }
+    draw(){
+        
+    }
 
-    update(deltaTime){
+    update(deltaTime, level){
         this.traits.forEach(trait =>{
-            trait.update(this, deltaTime)
+            trait.update(this, deltaTime, level)
         })
 
         this.lifeTime += deltaTime

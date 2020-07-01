@@ -1,9 +1,20 @@
 import Camera from './Camera.js'
 import Timer from './timer.js'
+import Entity from './entity.js'
+import playerController from './traits/playerController.js'
 import { createLevelLoader } from './loaders/levelloader.js';
 import { loadEntities } from './entities.js'
 import { setupKeyboard } from './input.js'
 import { createCollisionLayer } from './Layers.js'
+
+function createPlayerEnv(playerEntity){
+    const playerEnv = new Entity()
+    const playerControl = new playerController()
+    playerControl.checkpoint.set(64,64)
+    playerControl.setPlayer(playerEntity)
+    playerEnv.addTrait(playerControl)
+    return playerEnv
+}
 
 async function main(canvas){
     const context = canvas.getContext('2d');
@@ -14,9 +25,9 @@ async function main(canvas){
         const camera = new Camera()
 
         const player = entityFactory.player()
-        player.pos.set(64, 180)
 
-        level.entities.add(player)
+        const playerEnv = createPlayerEnv(player)
+        level.entities.add(playerEnv)
 
         level.comp.layers.push(createCollisionLayer(level))
 
@@ -33,9 +44,9 @@ async function main(canvas){
 
             level.update(deltaTime)
 
-            if (player.pos.x > 100) {
-                camera.pos.x = player.pos.x - 100
-            }
+
+            camera.pos.x = Math.max(0, player.pos.x - 100)
+            
 
             level.comp.draw(context, camera)
 

@@ -1,7 +1,9 @@
 import Entity from '../entity.js';
 import Jump from '../traits/jump.js'
+import Stomper from '../traits/stomper.js'
 import Go from '../traits/go.js'
 import { loadSpriteSheet } from '../loaders.js';
+import Killable from '../traits/killable.js';
 
 const FAST_DRAG = 1 / 5000
 const SLOW_DRAG = 1 / 1000
@@ -43,6 +45,10 @@ function createPlayerFactory(sprite) {
 
         player.addTrait(new Go())
         player.addTrait(new Jump())
+        player.addTrait(new Stomper())
+        player.addTrait(new Killable())
+
+        player.Killable.removeAfter = 0
 
 
         player.turbo = setTurboState
