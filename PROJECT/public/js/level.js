@@ -6,7 +6,7 @@ import TileCollider from './tilecollider.js'
 
 
 export default class Level {
-    constructor(){
+    constructor() {
         this.gravity = 1500
         this.totalTime = 0
 
@@ -27,18 +27,20 @@ export default class Level {
             entity.update(deltaTime, this)
 
             entity.pos.x += entity.vel.x * deltaTime;
-    
-            this.tileCollider.checkX(entity)
-
+            if (entity.canCollide) {
+                this.tileCollider.checkX(entity)
+            }
             entity.pos.y += entity.vel.y * deltaTime;
-    
-            this.tileCollider.checkY(entity)
-
+            if (entity.canCollide) {
+                this.tileCollider.checkY(entity)
+            }
             entity.vel.y += this.gravity * deltaTime
         })
 
-        this.entities.forEach(entity => { 
-            this.entityCollider.check(entity)
+        this.entities.forEach(entity => {
+            if (entity.canCollide) {
+                this.entityCollider.check(entity)
+            }
         })
         this.totalTime += deltaTime
     }

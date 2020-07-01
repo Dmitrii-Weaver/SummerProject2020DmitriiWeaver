@@ -1,6 +1,6 @@
 import Entity, { Sides, Trait } from '../entity.js';
 import { loadSpriteSheet } from '../loaders.js';
-import PendulumWalk from '../traits/PendulumWalk.js'
+import PendulumMove from '../traits/pendulumMove.js'
 import Killable from '../traits/killable.js'
 
 export function loadEnemy1() {
@@ -18,8 +18,7 @@ class behaviour extends Trait {
         }
         if (them.stomper) {
             if (them.vel.y > us.vel.y) {
-                us.pendulumWalk.speed = 0
-                them.stomper.bounce()
+                us.pendulumMove.speed = 0
                 us.Killable.kill()
             }
             else{
@@ -45,7 +44,7 @@ function createEnemy1Factory(sprite) {
     return function createEnemy1() {
         const enemy1 = new Entity()
         enemy1.size.set(16, 16)
-        enemy1.addTrait(new PendulumWalk())
+        enemy1.addTrait(new PendulumMove())
         enemy1.addTrait(new behaviour())
         enemy1.addTrait(new Killable())
         enemy1.draw = drawEnemy1
