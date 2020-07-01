@@ -40,6 +40,10 @@ export default class Entity {
         
     }
 
+    collides(candidate){
+        console.log('touched ', candidate)
+    }
+
     obstruct(side){
         this.traits.forEach(trait =>{
             trait.obstruct(this, side)
