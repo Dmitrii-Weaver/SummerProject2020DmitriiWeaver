@@ -2,6 +2,8 @@ import Entity, { Sides, Trait } from '../entity.js';
 import { loadSpriteSheet } from '../loaders.js';
 import PendulumMove from '../traits/pendulumMove.js'
 import Killable from '../traits/killable.js'
+import Solid from '../traits/solid.js'
+import physics from '../traits/physics.js'
 
 export function loadEnemy1() {
     return loadSpriteSheet('enemy1')
@@ -44,6 +46,8 @@ function createEnemy1Factory(sprite) {
     return function createEnemy1() {
         const enemy1 = new Entity()
         enemy1.size.set(16, 16)
+        enemy1.addTrait(new Solid())
+        enemy1.addTrait(new physics())
         enemy1.addTrait(new PendulumMove())
         enemy1.addTrait(new behaviour())
         enemy1.addTrait(new Killable())

@@ -2,6 +2,8 @@ import Entity, { Sides, Trait } from '../entity.js';
 import PendulumMove from '../traits/pendulumMove.js'
 import { loadSpriteSheet } from '../loaders.js';
 import Killable from '../traits/killable.js'
+import Solid from '../traits/solid.js'
+import physics from '../traits/physics.js'
 
 export function loadTurtle() {
     return loadSpriteSheet('turtle')
@@ -59,7 +61,7 @@ class behaviour extends Trait {
         else if (this.state === STATE_HIDING) {
             us.Killable.kill()
             us.vel.set(100, -200)
-            us.canCollide = false
+            us.solid.obstructs = false
         }
         else if (this.state === STATE_PANIC) {
             this.hide(us)
@@ -121,6 +123,8 @@ function createTurtleFactory(sprite) {
         const turtle = new Entity()
         turtle.size.set(16, 16)
         turtle.offset.y = 8
+        turtle.addTrait(new Solid())
+        turtle.addTrait(new physics())
         turtle.addTrait(new PendulumMove())
         turtle.addTrait(new Killable())
         turtle.addTrait(new behaviour())

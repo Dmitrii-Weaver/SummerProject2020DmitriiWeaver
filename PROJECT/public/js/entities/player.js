@@ -1,5 +1,7 @@
 import Entity from '../entity.js';
 import Jump from '../traits/jump.js'
+import Solid from '../traits/solid.js'
+import physics from '../traits/physics.js'
 import Stomper from '../traits/stomper.js'
 import Go from '../traits/go.js'
 import { loadSpriteSheet } from '../loaders.js';
@@ -44,10 +46,11 @@ function createPlayerFactory(sprite) {
         player.size.set(14, 16)
 
         player.addTrait(new Go())
+        player.addTrait(new Solid())
+        player.addTrait(new physics())
         player.addTrait(new Jump())
         player.addTrait(new Stomper())
         player.addTrait(new Killable())
-
         player.Killable.removeAfter = 0
 
 
