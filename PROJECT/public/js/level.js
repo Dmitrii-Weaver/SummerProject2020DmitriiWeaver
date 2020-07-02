@@ -42,6 +42,11 @@ export default class Level {
                 this.entityCollider.check(entity)
             }
         })
+
+        this.entities.forEach(entity => {
+            entity.finalize()
+        })
+
         this.totalTime += deltaTime
     }
 }

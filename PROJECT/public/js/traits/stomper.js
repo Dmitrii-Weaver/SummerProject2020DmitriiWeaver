@@ -12,7 +12,10 @@ export default class Stomper extends Trait {
     }
 
     collides(us, them){
-        if(them.Killable && us.vel.y > them.vel.y){
+        if(!them.Killable || them.Killable.dead){
+            return
+        }   
+        if (us.vel.y > them.vel.y){
             this.bounce(us,them)
         }
     }
