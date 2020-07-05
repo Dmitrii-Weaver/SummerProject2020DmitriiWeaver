@@ -1,5 +1,6 @@
 import {Vec2} from './math.js'
 import BoundingBox from './BoundingBox.js'
+import { AudioBoard } from './audioboard.js'
 
 export const Sides = {
     TOP: Symbol('top'),
@@ -39,7 +40,7 @@ export class Trait{
 
 export default class Entity {
     constructor(){
-
+        this.audio = new AudioBoard()
         this.canCollide = true
         this.pos = new Vec2(0,0)
         this.vel = new Vec2 (0,0)
@@ -77,11 +78,11 @@ export default class Entity {
         })
     }
 
-    update(deltaTime, level){
+    update(gameContext, level){
         this.traits.forEach(trait =>{
-            trait.update(this, deltaTime, level)
+            trait.update(this, gameContext, level)
         })
 
-        this.lifeTime += deltaTime
+        this.lifeTime += gameContext.deltaTime
     }
 }

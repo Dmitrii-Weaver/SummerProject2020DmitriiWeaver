@@ -6,7 +6,7 @@ export default class physics extends Trait {
         this.enabled = true
     }
 
-    update(entity, deltaTime, level) {
+    update(entity, {deltaTime}, level) {
         if (!this.enabled){
             return
         }

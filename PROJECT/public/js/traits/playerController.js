@@ -18,7 +18,7 @@ export default class playerController extends Trait {
             this.score += 100
         }
     }
-    update(entity, deltaTime, level) {
+    update(entity, {deltaTime}, level) {
         if(!level.entities.has(this.player)){
             this.player.Killable.revive()
             this.player.pos.set(this.checkpoint.x, this.checkpoint.y)
