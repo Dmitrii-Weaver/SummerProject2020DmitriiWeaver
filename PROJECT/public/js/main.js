@@ -1,10 +1,8 @@
 import Camera from './Camera.js'
 import Timer from './timer.js'
 import Entity from './entity.js'
-import {AudioBoard} from './audioboard.js'
 import playerController from './traits/playerController.js'
 import { createLevelLoader } from './loaders/levelloader.js';
-import { createAudioLoader } from './loaders/audio.js';
 import { loadFont } from './loaders/font.js';
 import { loadEntities } from './entities.js'
 import { setupKeyboard } from './input.js'
@@ -47,7 +45,7 @@ async function main(canvas) {
     input.listenTo(window)
 
     const gameContext = {
-        
+        audioContext,
         deltaTime: null,
     }
 

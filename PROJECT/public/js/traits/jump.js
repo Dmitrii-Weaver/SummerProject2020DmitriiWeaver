@@ -3,6 +3,7 @@ import { Trait, Sides } from '../entity.js'
 export default class Jump extends Trait {
     constructor() {
         super('jump')
+        
         this.ready = 0
         this.duration = 0.3
         this.velocity = 200
@@ -33,10 +34,10 @@ export default class Jump extends Trait {
     }
 
 
-    update(entity, {deltaTime, audioBoard}) {
+    update(entity, {deltaTime}) {
         if (this.requestTime > 0) {
             if (this.ready > 0) {
-                entity.audio.playAudio('jump')
+                this.sounds.add('jump')
                 this.engageTime = this.duration
                 this.requestTime = 0
 
