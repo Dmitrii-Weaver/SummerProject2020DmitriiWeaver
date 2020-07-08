@@ -1,7 +1,7 @@
 import { loadPlayer } from './entities/player.js';
 import {loadEnemy1} from './entities/enemy1.js';
 import {loadTurtle} from './entities/turtle.js';
-
+import {loadBullet} from './entities/bullet.js'
 export function loadEntities(audioContext){
     const entityFactories = {};
 
@@ -12,7 +12,9 @@ export function loadEntities(audioContext){
     return Promise.all([
         loadPlayer(audioContext).then(addAs('player')),
         loadEnemy1(audioContext).then(addAs('enemy1')),
-        loadTurtle(audioContext).then(addAs('turtle'))
+        loadTurtle(audioContext).then(addAs('turtle')),
+        loadBullet(audioContext).then(addAs('Bullet'))
+  
     ])
     .then(() => entityFactories)
 }
