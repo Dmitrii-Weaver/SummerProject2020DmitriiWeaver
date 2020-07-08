@@ -1,4 +1,4 @@
-import {Vec2} from './math.js'
+import { Vec2 } from './math.js'
 import BoundingBox from './BoundingBox.js'
 import { AudioBoard } from './audioboard.js'
 import EventEmitter from './eventEmitter.js'
@@ -10,11 +10,10 @@ export const Sides = {
     RIGHT: Symbol('right')
 }
 
-export class Trait{
-    constructor(name){
+export class Trait {
+    constructor(name) {
         this.NAME = name
         this.events = new EventEmitter()
-        this.sounds = new Set()
         this.tasks = []
     }
 
@@ -23,75 +22,79 @@ export class Trait{
         this.tasks.length = 0
     }
 
-    queue(task){
+    queue(task) {
         this.tasks.push(task)
     }
 
-    collides(us, them){
-  
-    }
-
-    obstruct(){
+    collides(us, them) {
 
     }
 
-    playSounds(audioBoard, audioContext ){
-        this.sounds.forEach(name =>{
-            audioBoard.playAudio(name, audioContext)
-        })
-        this.sounds.clear()
+    obstruct() {
+
     }
 
-    update(){
+    update() {
 
-   }
+    }
 }
 
 export default class Entity {
-    constructor(){
+    constructor() {
+        this.sounds = new Set()
         this.audio = new AudioBoard()
         this.canCollide = true
-        this.pos = new Vec2(0,0)
-        this.vel = new Vec2 (0,0)
-        this.size = new Vec2 (0,0)
-        this.offset = new Vec2(0,0)
+        this.pos = new Vec2(0, 0)
+        this.vel = new Vec2(0, 0)
+        this.size = new Vec2(0, 0)
+        this.offset = new Vec2(0, 0)
         this.bounds = new BoundingBox(this.pos, this.size, this.offset)
         this.lifeTime = 0
 
         this.traits = []
     }
-    addTrait(trait){
+    addTrait(trait) {
         this.traits.push(trait)
         this[trait.NAME] = trait
 
-        
+
     }
 
-    collides(candidate){
-        this.traits.forEach(trait =>{
+    collides(candidate) {
+        this.traits.forEach(trait => {
             trait.collides(this, candidate)
         })
     }
 
-    obstruct(side, match){
-        this.traits.forEach(trait =>{
+    obstruct(side, match) {
+        this.traits.forEach(trait => {
             trait.obstruct(this, side, match)
         })
     }
-    draw(){
-        
+    draw() {
+
     }
-    finalize(){
+    finalize() {
         this.traits.forEach(trait => {
             trait.finalize()
         })
     }
 
-    update(gameContext, level){
-        this.traits.forEach(trait =>{
-            trait.update(this, gameContext, level)
-            trait.playSounds(this.audio, gameContext.audioContext)
+
+
+    playSounds(audioBoard, audioContext) {
+        this.sounds.forEach(name => {
+            audioBoard.playAudio(name, audioContext)
         })
+        this.sounds.clear()
+    }
+
+    update(gameContext, level) {
+        this.traits.forEach(trait => {
+            trait.update(this, gameContext, level)
+        })
+
+        this.playSounds(this.audio, gameContext.audioContext)
 
         this.lifeTime += gameContext.deltaTime
     }

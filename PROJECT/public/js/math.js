@@ -41,6 +41,11 @@ export class Vec2 {
     constructor(x, y) {
         this.set(x, y)
     }
+
+    copy(Vec2){
+        this.x = Vec2.x
+        this.y = Vec2.y
+    }
     set(x, y) {
         this.x = x
         this.y = y

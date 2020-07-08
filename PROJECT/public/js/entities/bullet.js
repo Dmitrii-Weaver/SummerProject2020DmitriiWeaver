@@ -40,12 +40,12 @@ class behaviour extends Trait {
 function createBulletFactory(sprite) {
 
     function drawBullet(context) {
-        sprite.draw("bullet", context, 0, 0)
+        sprite.draw("bullet", context, 0, 0, this.vel.x < 0)
     }
     return function createBullet() {
         const Bullet = new Entity()
         Bullet.size.set(16, 14)
-        Bullet.vel.set(80, 0)
+
         Bullet.addTrait(new behaviour())
         Bullet.addTrait(new velocity())
         Bullet.addTrait(new Killable())

@@ -2,6 +2,7 @@ import { loadPlayer } from './entities/player.js';
 import {loadEnemy1} from './entities/enemy1.js';
 import {loadTurtle} from './entities/turtle.js';
 import {loadBullet} from './entities/bullet.js'
+import {loadCannon} from './entities/cannon.js'
 export function loadEntities(audioContext){
     const entityFactories = {};
 
@@ -13,8 +14,9 @@ export function loadEntities(audioContext){
         loadPlayer(audioContext).then(addAs('player')),
         loadEnemy1(audioContext).then(addAs('enemy1')),
         loadTurtle(audioContext).then(addAs('turtle')),
-        loadBullet(audioContext).then(addAs('Bullet'))
-  
+        loadBullet(audioContext).then(addAs('Bullet')),
+        loadCannon(audioContext, entityFactories).then(addAs('cannon'))
+
     ])
     .then(() => entityFactories)
 }
