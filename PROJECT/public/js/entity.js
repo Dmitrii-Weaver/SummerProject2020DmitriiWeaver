@@ -1,6 +1,7 @@
 import {Vec2} from './math.js'
 import BoundingBox from './BoundingBox.js'
 import { AudioBoard } from './audioboard.js'
+import EventEmitter from './eventEmitter.js'
 
 export const Sides = {
     TOP: Symbol('top'),
@@ -12,6 +13,7 @@ export const Sides = {
 export class Trait{
     constructor(name){
         this.NAME = name
+        this.events = new EventEmitter()
         this.sounds = new Set()
         this.tasks = []
     }
