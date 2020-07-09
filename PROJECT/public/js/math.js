@@ -17,6 +17,14 @@ export class Matrix {
         this.grid.length = 0;
     }
 
+    delete(x,y){
+        const col = this.grid[x]
+        if (col) {
+            delete col[y]
+        }
+        return undefined
+    }
+
 
     get(x, y) {
         const col = this.grid[x]

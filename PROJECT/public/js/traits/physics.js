@@ -6,15 +6,16 @@ export default class physics extends Trait {
         this.enabled = true
     }
 
-    update(entity, {deltaTime}, level) {
+    update(entity, gameContext, level) {
+        const {deltaTime} = gameContext 
         if (!this.enabled){
             return
         }
         entity.pos.x += entity.vel.x * deltaTime;
-        level.tileCollider.checkX(entity)
+        level.tileCollider.checkX(entity, gameContext, level)
 
         entity.pos.y += entity.vel.y * deltaTime;
-        level.tileCollider.checkY(entity)
+        level.tileCollider.checkY(entity, gameContext, level)
 
         entity.vel.y += level.gravity * deltaTime
     }
