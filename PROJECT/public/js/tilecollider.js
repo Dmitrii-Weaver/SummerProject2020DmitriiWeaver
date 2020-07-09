@@ -1,5 +1,12 @@
 import TileResolver from './TileResolver.js'
-import {Sides} from './entity.js'
+import {ground} from './tiles/ground.js'
+import {brick} from './tiles/brick.js'
+
+const handlers = {
+    brick,
+    ground
+
+}
 
 export default class TileCollider {
     constructor(tileMatrix) {
@@ -9,11 +16,14 @@ export default class TileCollider {
 
     checkX(entity) {
         let x
-        if (entity.vel.x > 0){
+        if (entity.vel.x > 0) {
             x = entity.bounds.right
         }
-        else if (entity.vel.x < 0){
+        else if (entity.vel.x < 0) {
             x = entity.bounds.left
+        }
+        else {
+            return
         }
 
         const matches = this.tiles.searchByRange(
@@ -21,35 +31,20 @@ export default class TileCollider {
             entity.bounds.top, entity.bounds.bottom)
 
         matches.forEach(match => {
-            if (match.tile.type !== 'ground') {
-                return
-            }
-            if (entity.vel.x > 0) {
-                if (entity.bounds.right > match.x1) {
-                    entity.obstruct(Sides.RIGHT, match)
-                }
-            }
-            else if (entity.vel.x < 0) {
-                if (entity.bounds.left < match.x2) {
-                    entity.obstruct(Sides.LEFT, match)
-                }
-            }
-            else{
-                return
-            }
+            this.handle(0,entity, match, this.tiles)
 
         })
 
     }
     checkY(entity) {
         let y
-        if (entity.vel.y > 0){
+        if (entity.vel.y > 0) {
             y = entity.bounds.bottom
         }
-        else if (entity.vel.y < 0){
+        else if (entity.vel.y < 0) {
             y = entity.bounds.top
         }
-        else{
+        else {
             return
         }
 
@@ -58,27 +53,16 @@ export default class TileCollider {
             y, y)
 
         matches.forEach(match => {
-            if (match.tile.type !== 'ground') {
-                return
-            }
-            if (entity.vel.y > 0) {
-                if (entity.bounds.bottom > match.y1) {
-                    entity.obstruct(Sides.BOTTOM, match)
-                }
-            }
-            else if (entity.vel.y < 0) {
-                if (entity.bounds.top < match.y2) {
-                    entity.obstruct(Sides.TOP, match)
-                }
-            }
-
+            this.handle(1,entity, match, this.tiles)
         })
 
     }
 
-    test(entity) {
-        this.checkY(entity)
-
+    handle(index, entity,match, tiles){
+        const handler = handlers[match.tile.type]
+        if (handler) {
+            handler[index](entity, match, tiles)
+        }
 
     }
 }
