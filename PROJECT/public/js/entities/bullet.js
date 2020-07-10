@@ -1,7 +1,6 @@
 import Entity, { Sides, Trait } from '../entity.js';
-import { loadSpriteSheet } from '../loaders.js';
+import { loadSpriteSheet } from '../loaders/sprite.js';
 import Killable from '../traits/killable.js'
-import Solid from '../traits/solid.js'
 import velocity from '../traits/justvel.js'
 import gravity from '../traits/gravity.js';
 

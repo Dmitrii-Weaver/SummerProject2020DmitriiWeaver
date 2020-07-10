@@ -1,5 +1,6 @@
 
 import Compositor from './Compositor.js'
+import MusicController from './musicController.js'
 import EntityCollider from './entityCollider.js'
 import TileCollider from './tilecollider.js'
 
@@ -9,6 +10,8 @@ export default class Level {
     constructor() {
         this.gravity = 1500
         this.totalTime = 0
+
+        this.music = new MusicController()
 
         this.comp = new Compositor()
         this.entities = new Set()

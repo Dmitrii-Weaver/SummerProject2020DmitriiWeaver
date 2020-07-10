@@ -4,7 +4,7 @@ import Solid from '../traits/solid.js'
 import physics from '../traits/physics.js'
 import Stomper from '../traits/stomper.js'
 import Go from '../traits/go.js'
-import { loadSpriteSheet } from '../loaders.js';
+import { loadSpriteSheet } from '../loaders/sprite.js';
 import Killable from '../traits/killable.js';
 import { loadAudioBoard } from '../loaders/audio.js';
 

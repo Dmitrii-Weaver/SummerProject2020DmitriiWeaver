@@ -1,5 +1,5 @@
 import Entity, { Sides, Trait } from '../entity.js';
-import { loadSpriteSheet } from '../loaders.js';
+import { loadSpriteSheet } from '../loaders/sprite.js';
 import PendulumMove from '../traits/pendulumMove.js'
 import Killable from '../traits/killable.js'
 import Solid from '../traits/solid.js'
