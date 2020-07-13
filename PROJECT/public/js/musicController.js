@@ -6,4 +6,16 @@ export default class MusicController {
         this.player = player
     }
     
+    playTheme(speed = 1){
+        const audio = this.player.playtrack('main')
+        audio.playbackRate = speed
+    }
+    playHurryTheme(){
+        const audio = this.player.playtrack('hurry')
+        audio.loop = false
+        audio.addEventListener('ended', () => {
+            this.playTheme(1.3)
+        }, {once:true})
+        
+    }
 }

@@ -7,7 +7,7 @@ import { loadEntities } from './entities.js'
 import { setupKeyboard } from './input.js'
 import { createCollisionLayer } from './layers/collision.js'
 import { createDashboardLayer } from './layers/dashboard.js'
-
+import LevelTimer from './traits/levelTimer.js';
 
 
 async function main(canvas) {
@@ -25,12 +25,14 @@ async function main(canvas) {
     const camera = new Camera()
 
     const player = createPlayer(entityFactory.player()) 
-
+    player.player.name = "MARIO"
+    level.entities.add(player)
     const playerEnv = createPlayerEnv(player)
     level.entities.add(playerEnv)
 
+
     level.comp.layers.push(createCollisionLayer(level))
-    level.comp.layers.push(createDashboardLayer(font, playerEnv))
+    level.comp.layers.push(createDashboardLayer(font, level))
 
 
     const input = setupKeyboard(player)

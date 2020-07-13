@@ -20,7 +20,6 @@ export class Trait {
     listen(name,callback, count = Infinity){
         const listener = {name, callback, count}
         this.listeners.push(listener)
-        console.log('listener added', this, name)
     }
 
     finalize(entity) {
