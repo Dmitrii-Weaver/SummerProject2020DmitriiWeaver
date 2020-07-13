@@ -10,7 +10,6 @@ export default class EntityCollider {
             }
             if(subject.bounds.overlaps(candidate.bounds)){
                 subject.collides(candidate)
-                candidate.collides(subject)
             }
         })
     }
