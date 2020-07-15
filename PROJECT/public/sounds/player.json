@@ -5,6 +5,9 @@
         },
         "stomp":{
           "url" : "/aud/stomp.ogg"
+        },
+        "coin":{
+          "url" : "/aud/coin.ogg"
         }
     }
 }
