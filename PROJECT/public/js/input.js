@@ -1,24 +1,30 @@
 import Keyboard from './keyboardstate.js'
+import InputRouter from './inputRouter.js'
 
-export function setupKeyboard(player) {
+export function setupKeyboard(window) {
+
 
     const input = new Keyboard()
+    const router = new InputRouter()
+
+    input.listenTo(window)
+
     input.addMapping('KeyP', keyState => {
         if (keyState) {
-            player.jump.start()
+            router.route(entity => entity.jump.start())
         }
         else {
-            player.jump.cancel()
+            router.route(entity => entity.jump.cancel())
         }
     })
     input.addMapping('KeyO', keyState => {
-        player.turbo(keyState)
+       router.route(entity => entity.turbo(keyState))
     })
     input.addMapping('KeyD', keyState => {
-        player.go.dir += keyState ? 1 : -1
+       router.route(entity => entity.go.dir += keyState ? 1 : -1)
     })
     input.addMapping('KeyA', keyState => {
-        player.go.dir += -keyState ? -1 : 1
+       router.route(entity => entity.go.dir += -keyState ? -1 : 1)
     })
-    return input
+    return router
 }

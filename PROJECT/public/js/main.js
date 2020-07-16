@@ -1,4 +1,4 @@
-import Camera from './Camera.js'
+
 import Timer from './timer.js'
 import {createPlayer, createPlayerEnv} from './player.js'
 import { createLevelLoader } from './loaders/levelloader.js';
@@ -7,11 +7,10 @@ import { loadEntities } from './entities.js'
 import { setupKeyboard } from './input.js'
 import { createCollisionLayer } from './layers/collision.js'
 import { createDashboardLayer } from './layers/dashboard.js'
-import LevelTimer from './traits/levelTimer.js';
-
+import SceneRunner from './sceneRunner.js';
 
 async function main(canvas) {
-    const context = canvas.getContext('2d');
+    const videoContext = canvas.getContext('2d');
     const audioContext = new AudioContext()
     const [entityFactory, font] = await Promise.all([
         loadEntities(audioContext),
@@ -20,9 +19,12 @@ async function main(canvas) {
     
 
     const loadLevel = await createLevelLoader(entityFactory)
-    const level = await loadLevel('debug')
+   
+   const sceneRunner = new SceneRunner()
+   
+    const level = await loadLevel('1-2')
 
-    const camera = new Camera()
+
 
     const player = createPlayer(entityFactory.player()) 
     player.player.name = "MARIO"
@@ -35,11 +37,14 @@ async function main(canvas) {
     level.comp.layers.push(createDashboardLayer(font, level))
 
 
-    const input = setupKeyboard(player)
-    input.listenTo(window)
+    const inputRouter = setupKeyboard(window)
+    inputRouter.addReceiver(player)
+
+    sceneRunner.addScene(level)
 
     const gameContext = {
         audioContext,
+        videoContext,
         deltaTime: null,
         entityFactory
     }
@@ -50,16 +55,10 @@ async function main(canvas) {
 
     timer.update = function update(deltaTime) {
         gameContext.deltaTime = deltaTime
-        level.update(gameContext)
-
-
-        camera.pos.x = Math.max(0, player.pos.x - 100)
-
-
-        level.comp.draw(context, camera)
+        sceneRunner.update(gameContext)
     }
     timer.start()
-    level.music.player.playtrack('main')
+    sceneRunner.runNext()
 }
 
 const canvas = document.getElementById('screen');

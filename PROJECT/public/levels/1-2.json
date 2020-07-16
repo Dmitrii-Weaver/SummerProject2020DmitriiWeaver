@@ -1,7 +1,9 @@
 {
-    "spriteSheet": "overworld",
-    "musicSheet": "silent",
+    "spriteSheet": "underworld",
+    "musicSheet": "underworld",
+
     "patternSheet": "overworld_patterns",
+
     "layers": [
         {
             "tiles": [
@@ -27,31 +29,35 @@
                             2
                         ]
                     ]
-                }
-               
-                
-            ]
-        },
-        {
-            "tiles": [
-                
+                },
                 {
-                    "name": "coin",
-                    "type": "coin",
+                    "name": "sky",
                     "ranges": [
                         [
-                            5,
-                            50,
-                            5,
-                            5
+                            75,
+                            2,
+                            13,
+                            2
+                        ],
+                        [
+                            92,
+                            2,
+                            13,
+                            2
+                        ],
+                        [
+                            157,
+                            2,
+                            13,
+                            2
                         ]
                     ]
-                }
-
+                } 
             ]
         }
+       
     ],
     "entities": [
-        
+       
     ]
 }

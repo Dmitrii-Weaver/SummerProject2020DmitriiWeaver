@@ -15,7 +15,7 @@ export function loadEntities(audioContext){
         loadEnemy1(audioContext).then(addAs('enemy1')),
         loadTurtle(audioContext).then(addAs('turtle')),
         loadBullet(audioContext).then(addAs('Bullet')),
-        loadCannon(audioContext, entityFactories).then(addAs('cannon'))
+        loadCannon(audioContext).then(addAs('cannon'))
 
     ])
     .then(() => entityFactories)

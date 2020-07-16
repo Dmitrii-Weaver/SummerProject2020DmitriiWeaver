@@ -19,10 +19,9 @@ export default class player extends Trait {
     addCoins(count){
         this.coins+=count
         this.queue(entity => entity.sounds.add('coin'))
-        if(this.coins >=  COIN_LIVE_THRESHOLD){
-            const lifeCount = Math.floor(this.coins/COIN_LIVE_THRESHOLD)
-            this.addLives(lifeCount)
-            this.coins = this.coins % COIN_LIVE_THRESHOLD
+        while (this.coins >=  COIN_LIVE_THRESHOLD){
+           this.addLives(1)
+            this.coins -=  COIN_LIVE_THRESHOLD
         }
     }
     addLives(count){
