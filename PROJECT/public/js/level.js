@@ -6,7 +6,7 @@ import TileCollider from './tilecollider.js'
 import EventEmitter from './eventEmitter.js'
 import Camera from './Camera.js'
 import { findPlayers } from './player.js'
-
+import Scene from './scene.js'
 
 function focusPlayer(level){
     for (const player of findPlayers(level)){
@@ -16,19 +16,17 @@ function focusPlayer(level){
 
 }
 
-export default class Level {
+export default class Level extends Scene {
     constructor() {
+        super()
         this.name = ""
         this.gravity = 1500
         this.totalTime = 0
 
 
         this.camera = new Camera()
-
-        this.events = new EventEmitter()
         this.music = new MusicController()
 
-        this.comp = new Compositor()
         this.entities = new Set()
 
         this.entityCollider = new EntityCollider(this.entities)

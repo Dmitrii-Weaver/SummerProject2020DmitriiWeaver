@@ -1,3 +1,4 @@
+import Scene from './scene.js'
 export default class SceneRunner{
     constructor(){
         this.sceneIndex = -1
@@ -5,6 +6,9 @@ export default class SceneRunner{
     }
 
     addScene(scene){
+        scene.events.listen(Scene.EVENT_COMPLETE, () =>{
+            this.runNext()
+        })
         this.scenes.push(scene)
     }
 
