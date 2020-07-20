@@ -1,6 +1,6 @@
 
 import Scene from './scene.js'
-export default class CompositionScene extends Scene{
+export default class TimedScene extends Scene{
     constructor() {
     
        super()

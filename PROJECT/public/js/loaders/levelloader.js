@@ -15,11 +15,7 @@ function createTimer() {
     return timer
 }
 
-function createTrigger() {
-    const entity = new Entity()
-    entity.addTrait(new Trigger)
-    return entity
-}
+
 
 function loadPattern(name) {
     return loadJSON(`/sprites/patterns/${name}.json`)
@@ -65,11 +61,13 @@ function setupTriggers(levelSpec, level) {
     if (!levelSpec.triggers) {
         return
     }
-    for (const triggerSpec of levelSpec.triggers) {
-        const entity = createTrigger()
-        entity.trigger.conditions.push((entity, touches, gc, level) => {
+    for (const triggerSpec of levelSpec.triggers) {  
+        const trigger = new Trigger()
+        trigger.conditions.push((entity, touches, gc, level) => {
             level.events.emit(level.EVENT_TRIGGER, triggerSpec, entity, touches)
         })
+        const entity = new Entity()
+        entity.addTrait(trigger)
         entity.size.set(64,64)
         entity.pos.set(triggerSpec.pos[0], triggerSpec.pos[1])
         level.entities.add(entity)

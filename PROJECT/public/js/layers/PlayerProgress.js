@@ -1,7 +1,8 @@
 import {findPlayers} from "../player.js"
+import Player from "../traits/player.js"
 
-function getPlayer(level) {
-    for(const entity of findPlayers(level)){
+function getPlayer(entities) {
+    for(const entity of findPlayers(entities)){
         return entity
     }
 }
@@ -17,14 +18,15 @@ export function createPlayerProgress(font, level) {
 
     return function drawPlayerProgress(context ) {
 
-        const player = getPlayer(level)
+        const entity = getPlayer(level.entities)
+        const player = entity.traits.get(Player)
 
         font.print('WORLD ' + level.name, context, size * 12, size * 12)
         spriteBufferContext.clearRect(0,0,spriteBuffer.width, spriteBuffer.height)
-        player.draw(spriteBufferContext)
+        entity.draw(spriteBufferContext)
         context.drawImage(spriteBuffer, size*12,size*15)
     
-        font.print('x  ' + player.player.lives.toString().padStart(2, ' '),
+        font.print('x  ' + player.lives.toString().padStart(2, ' '),
          context, size * 16, size * 16)
  
     

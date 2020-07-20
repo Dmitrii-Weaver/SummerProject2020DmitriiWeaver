@@ -1,8 +1,8 @@
-import Entity, { Trait } from '../entity.js'
+import Trait from '../trait.js'
 
 export default class Go extends Trait {
     constructor() {
-        super('go')
+        super()
 
         this.dir = 0
         this.acceleration = 400

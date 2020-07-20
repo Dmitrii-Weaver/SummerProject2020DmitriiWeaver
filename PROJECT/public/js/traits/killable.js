@@ -1,8 +1,9 @@
-import { Trait, Sides } from '../entity.js'
+import Trait from '../trait.js'
+
 
 export default class Killable extends Trait {
     constructor() {
-        super('Killable')
+        super()
         this.dead = false
         this.deadTime = 0
         this.removeAfter = 2

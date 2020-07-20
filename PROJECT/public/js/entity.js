@@ -2,6 +2,7 @@ import { Vec2 } from './math.js'
 import BoundingBox from './BoundingBox.js'
 import { AudioBoard } from './audioboard.js'
 import EventBuffer from './eventBuffer.js'
+import Trait from './trait.js'
 
 export const Sides = {
     TOP: Symbol('top'),
@@ -10,51 +11,15 @@ export const Sides = {
     RIGHT: Symbol('right')
 }
 
-export class Trait {
-    static EVENT_TASK = Symbol('task')
-    constructor(name) {
-        this.NAME = name
-        this.listeners = []
-    }
-
-    listen(name,callback, count = Infinity){
-        const listener = {name, callback, count}
-        this.listeners.push(listener)
-    }
-
-    finalize(entity) {
-        this.listeners = this.listeners.filter(listener => {  
-            entity.events.process(listener.name, listener.callback)
-            return --listener.count
-        })
-
-
-    }
-
-    queue(task) {
-        this.listen(Trait.EVENT_TASK, task, 1)
-    }
-
-    collides(us, them) {
-
-    }
-
-    obstruct() {
-
-    }
-
-    update() {
-
-    }
-}
 
 export default class Entity {
     constructor() {
-        this.sounds = new Set()
         this.audio = new AudioBoard()
+        this.events = new EventBuffer()
+        this.sounds = new Set()
 
         this.events = new EventBuffer()
-        this.canCollide = true
+        
         this.pos = new Vec2(0, 0)
         this.vel = new Vec2(0, 0)
         this.size = new Vec2(0, 0)
@@ -62,11 +27,10 @@ export default class Entity {
         this.bounds = new BoundingBox(this.pos, this.size, this.offset)
         this.lifeTime = 0
 
-        this.traits = []
+        this.traits = new Map(); 
     }
     addTrait(trait) {
-        this.traits.push(trait)
-        this[trait.NAME] = trait
+        this.traits.set(trait.constructor, trait);
 
 
     }
