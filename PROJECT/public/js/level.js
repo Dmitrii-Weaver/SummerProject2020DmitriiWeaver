@@ -17,6 +17,7 @@ function focusPlayer(level){
 }
 
 export default class Level extends Scene {
+    static EVENT_TRIGGER = Symbol('trigger')
     constructor() {
         super()
         this.name = ""
@@ -56,5 +57,9 @@ export default class Level extends Scene {
         focusPlayer(this)
 
         this.totalTime += gameContext.deltaTime
+    }
+
+    pause(){
+        this.music.pause()
     }
 }

@@ -18,4 +18,8 @@ export default class MusicController {
         }, {once:true})
         
     }
+
+    pause(){
+        this.player.pauseAll()
+    }
 }

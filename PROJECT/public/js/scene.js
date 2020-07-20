@@ -5,17 +5,21 @@ import EventEmitter from './eventEmitter.js'
 export default class Scene {
     static EVENT_COMPLETE = Symbol('scene complete')
     constructor() {
-    
+
         this.events = new EventEmitter()
         this.comp = new Compositor()
     }
 
-    draw(gameContext){
+    draw(gameContext) {
         this.comp.draw(gameContext.videoContext)
     }
 
 
     update(gameContext) {
-        }
- 
+    }
+
+    pause(){
+        console.log("pause", this)
+    }
+
 }

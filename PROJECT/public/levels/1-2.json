@@ -59,5 +59,12 @@
     ],
     "entities": [
        
+    ],
+    "triggers":[
+        {
+            "type" : "goto",
+            "name" : "1-1",
+            "pos": [64,64]
+        }
     ]
 }

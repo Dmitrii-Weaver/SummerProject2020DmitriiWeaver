@@ -2,28 +2,35 @@ import Level from '../level.js'
 import Entity from '../entity.js'
 import { Matrix } from '../math.js'
 import { createSpriteLayer } from '../layers/sprites.js';
-import {createBackgroundLayer} from '../layers/background.js'
-import {  loadMusicSheet } from './music.js'
-import {  loadSpriteSheet } from './sprite.js'
+import { createBackgroundLayer } from '../layers/background.js'
+import { loadMusicSheet } from './music.js'
+import { loadSpriteSheet } from './sprite.js'
 import { loadJSON } from '../loaders.js'
 import LevelTimer from '../traits/levelTimer.js';
+import Trigger from '../traits/trigger.js';
 
-function createTimer(){
+function createTimer() {
     const timer = new Entity()
     timer.addTrait(new LevelTimer)
     return timer
 }
 
-function loadPattern(name){
+function createTrigger() {
+    const entity = new Entity()
+    entity.addTrait(new Trigger)
+    return entity
+}
+
+function loadPattern(name) {
     return loadJSON(`/sprites/patterns/${name}.json`)
 }
-``
 
-function setupBehaviour(level){
+
+function setupBehaviour(level) {
     const timer = createTimer()
     level.entities.add(timer)
 
-    level.events.listen(LevelTimer.EVENT_TIMER_OK, ()=>{
+    level.events.listen(LevelTimer.EVENT_TIMER_OK, () => {
         level.music.playTheme()
     })
     level.events.listen(LevelTimer.EVENT_TIMER_HURRY, () => {
@@ -44,15 +51,29 @@ function setupBackgrounds(levelSpec, level, backgroundSprites, patterns) {
 
 function setupEntities(levelSpec, level, entityFactory) {
 
-    levelSpec.entities.forEach(({name, pos:[x,y]}) => {
+    levelSpec.entities.forEach(({ name, pos: [x, y] }) => {
         const createEntity = entityFactory[name]
         const entity = createEntity()
-        entity.pos.set(x,y)
+        entity.pos.set(x, y)
         level.entities.add(entity)
 
     })
     const spriteLayer = createSpriteLayer(level.entities)
     level.comp.layers.push(spriteLayer)
+}
+function setupTriggers(levelSpec, level) {
+    if (!levelSpec.triggers) {
+        return
+    }
+    for (const triggerSpec of levelSpec.triggers) {
+        const entity = createTrigger()
+        entity.trigger.conditions.push((entity, touches, gc, level) => {
+            level.events.emit(level.EVENT_TRIGGER, triggerSpec, entity, touches)
+        })
+        entity.size.set(64,64)
+        entity.pos.set(triggerSpec.pos[0], triggerSpec.pos[1])
+        level.entities.add(entity)
+    }
 }
 
 export function createLevelLoader(entityFactory) {
@@ -69,9 +90,10 @@ export function createLevelLoader(entityFactory) {
                 const level = new Level()
                 level.name = name
                 level.music.setPlayer(musicPlayer)
-                
+
                 setupBackgrounds(levelSpec, level, backgroundSprites, patterns)
                 setupEntities(levelSpec, level, entityFactory)
+                setupTriggers(levelSpec, level)
                 setupBehaviour(level)
                 return level
             })
