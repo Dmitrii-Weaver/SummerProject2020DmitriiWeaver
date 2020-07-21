@@ -1,9 +1,8 @@
-
-import Trait from '../trait.js'
+import { Trait, Sides } from '../entity.js'
 
 export default class Velocity extends Trait {
     constructor() {
-        super()
+        super('velocity')
         this.enabled = true
     }
 

@@ -1,9 +1,9 @@
-import Trait from '../trait.js'
+import { Trait, Sides } from '../entity.js'
 import { Vec2 } from '../math.js'
 
 export default class playerController extends Trait {
     constructor() {
-        super()
+        super('playerController')
         this.checkpoint = new Vec2(0,0)
         this.player = null
     }

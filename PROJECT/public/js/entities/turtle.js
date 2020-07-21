@@ -1,11 +1,9 @@
-import Entity from '../entity.js';
+import Entity, { Sides, Trait } from '../entity.js';
 import PendulumMove from '../traits/pendulumMove.js'
 import { loadSpriteSheet } from '../loaders/sprite.js';
 import Killable from '../traits/killable.js'
 import Solid from '../traits/solid.js'
 import physics from '../traits/physics.js'
-import Trait from '../trait.js'
-import Stomper from '../traits/stomper.js';
 
 export function loadTurtle() {
     return loadSpriteSheet('turtle')
@@ -18,7 +16,7 @@ const STATE_PANIC = Symbol('panic')
 
 class behaviour extends Trait {
     constructor() {
-        super()
+        super('behaviour')
         this.state = STATE_WALKING
         this.hideTime = 0
         this.hideDuration = 5
@@ -26,10 +24,10 @@ class behaviour extends Trait {
         this.panicSpeed = 300
     }
     collides(us, them) {
-        if (us.traits.get(Killable).dead) {
+        if (us.Killable.dead) {
             return
         }
-        if (them.traits.has(Stomper)) {
+        if (them.stomper) {
             if (them.vel.y > us.vel.y) {
                 this.handleStomp(us, them)
             }
@@ -41,7 +39,7 @@ class behaviour extends Trait {
     }
     handleNudge(us, them) {
         if (this.state === STATE_WALKING) {
-            them.traits.get(Killable).kill()
+            them.Killable.kill()
         }
         else if (this.state === STATE_HIDING) {
             this.panic(us, them)
@@ -50,7 +48,7 @@ class behaviour extends Trait {
             const travelDir = Math.sign(us.vel.x)
             const impactDir = Math.sign(us.pos.x - them.pos.x)
             if (travelDir !== 0 && travelDir !== impactDir) {
-                them.traits.get(Killable).kill()
+                them.Killable.kill()
 
             }
         }
@@ -61,9 +59,9 @@ class behaviour extends Trait {
             this.hide(us)
         }
         else if (this.state === STATE_HIDING) {
-            us.traits.get(Killable).kill()
+            us.Killable.kill()
             us.vel.set(100, -200)
-            us.traits.get(Solid).obstructs = false
+            us.solid.obstructs = false
         }
         else if (this.state === STATE_PANIC) {
             this.hide(us)
@@ -72,21 +70,21 @@ class behaviour extends Trait {
     }
     hide(us) {
         us.vel.x = 0
-        us.traits.get(PendulumMove).enabled = false
+        us.pendulumMove.enabled = false
         if(this.walkSpeed === null){
-            this.walkSpeed = us.traits.get(PendulumMove).speed
+            this.walkSpeed = us.pendulumMove.speed
         }
         this.hideTime = 0
         this.state = STATE_HIDING
     }
     unhide(us) {
-        us.traits.get(PendulumMove).enabled = true
-        us.traits.get(PendulumMove).speed = this.walkSpeed
+        us.pendulumMove.enabled = true
+        us.pendulumMove.speed = this.walkSpeed
         this.state = STATE_WALKING
     }
     panic(us, them) {
-        us.traits.get(PendulumMove).enabled = true
-        us.traits.get(PendulumMove).speed = this.panicSpeed * Math.sign(them.vel.x)
+        us.pendulumMove.enabled = true
+        us.pendulumMove.speed = this.panicSpeed * Math.sign(them.vel.x)
         this.state = STATE_PANIC
     }
     update(us, gameContext) {
@@ -106,13 +104,13 @@ function createTurtleFactory(sprite) {
     const wakeAnim = sprite.animations.get('wake')
 
     function routeAnim(turtle) {
-        if (turtle.traits.get(behaviour).state == STATE_HIDING) {
-            if (turtle.traits.get(behaviour).hideTime > 3){
-                return wakeAnim(turtle.traits.get(behaviour).hideTime)
+        if (turtle.behaviour.state == STATE_HIDING) {
+            if (turtle.behaviour.hideTime > 3){
+                return wakeAnim(turtle.behaviour.hideTime)
             }
             return "hiding"
         }
-        if (turtle.traits.get(behaviour).state === STATE_PANIC){
+        if (turtle.behaviour.state === STATE_PANIC){
             return "hiding"
         }
         return walkAnim(turtle.lifeTime)

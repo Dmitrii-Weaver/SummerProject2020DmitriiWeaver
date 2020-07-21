@@ -1,12 +1,12 @@
-import Trait from '../trait.js'
+import Entity, { Trait, Sides } from '../entity.js'
 import Stomper from '../traits/stomper.js'
-
+import { coin } from '../tiles/coin.js'
 
 const COIN_LIVE_THRESHOLD = 100
 
-export default class Player extends Trait {
+export default class player extends Trait {
     constructor() {
-        super()
+        super('player')
         this.name = "UNNAMED"
         this.coins = 0
         this.lives = 3

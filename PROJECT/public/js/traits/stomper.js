@@ -1,12 +1,10 @@
-import Trait from '../trait.js'
-import Killable from './killable.js'
-
+import { Trait, Sides } from '../entity.js'
 
 export default class Stomper extends Trait {
     static EVENT_STOMP = Symbol('stomp')
 
     constructor() {
-        super()
+        super('stomper')
         this.bounceSpeed = 400
 
     }
@@ -17,7 +15,7 @@ export default class Stomper extends Trait {
     }
 
     collides(us, them){
-        if(!them.traits.has(Killable) || them.traits.get(Killable).dead){
+        if(!them.Killable || them.Killable.dead){
             return
         }   
         if (us.vel.y > them.vel.y){

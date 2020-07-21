@@ -1,9 +1,8 @@
-import {  Sides } from '../entity.js'
-import Trait from '../trait.js'
+import { Trait, Sides } from '../entity.js'
 
 export default class PendulumMove extends Trait {
     constructor() {
-        super()
+        super('pendulumMove')
         this.enabled = true
         this.speed = -30
     }

@@ -1,12 +1,15 @@
+
+import Compositor from './Compositor.js'
 import MusicController from './musicController.js'
 import EntityCollider from './entityCollider.js'
 import TileCollider from './tilecollider.js'
+import EventEmitter from './eventEmitter.js'
 import Camera from './Camera.js'
 import { findPlayers } from './player.js'
 import Scene from './scene.js'
 
 function focusPlayer(level){
-    for (const player of findPlayers(level.entities)){
+    for (const player of findPlayers(level)){
         level.camera.pos.x = Math.max(0, player.pos.x - 100)
 
     }

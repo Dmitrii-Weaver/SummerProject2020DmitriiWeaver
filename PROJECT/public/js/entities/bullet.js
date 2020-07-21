@@ -1,10 +1,8 @@
-import Entity from '../entity.js';
+import Entity, { Sides, Trait } from '../entity.js';
 import { loadSpriteSheet } from '../loaders/sprite.js';
 import Killable from '../traits/killable.js'
 import velocity from '../traits/justvel.js'
 import gravity from '../traits/gravity.js';
-import Trait from '../trait.js'
-import Stomper from '../traits/stomper.js';
 
 export function loadBullet() {
     return loadSpriteSheet('bullet')
@@ -13,26 +11,26 @@ export function loadBullet() {
 
 class behaviour extends Trait {
     constructor() {
-        super()
+        super('behaviour')
         this.gravity = new gravity()
     }
     collides(us, them) {
-        if (us.traits.get(Killable).dead) {
+        if (us.Killable.dead) {
             return
         }
-        if (them.traits.has(Stomper)) {
+        if (them.stomper) {
             if (them.vel.y > us.vel.y) {
-                us.traits.get(Killable).kill()
+                us.Killable.kill()
                 us.vel.set(100, -200)
             }
             else{
-                them.traits.get(Killable).kill()
+                them.Killable.kill()
             }
             
         }
     }
     update(entity, gameContext, level){
-        if (entity.traits.get(Killable).dead) {
+        if (entity.Killable.dead) {
             this.gravity.update(entity,gameContext,level)
         }
     }

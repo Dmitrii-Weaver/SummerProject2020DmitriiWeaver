@@ -1,10 +1,16 @@
-import Trait from '../trait.js'
+import { Trait, Sides } from '../entity.js'
 
 export default class physics extends Trait {
-
+    constructor() {
+        super('physics')
+        this.enabled = true
+    }
 
     update(entity, gameContext, level) {
         const {deltaTime} = gameContext 
+        if (!this.enabled){
+            return
+        }
         entity.pos.x += entity.vel.x * deltaTime;
         level.tileCollider.checkX(entity, gameContext, level)
 

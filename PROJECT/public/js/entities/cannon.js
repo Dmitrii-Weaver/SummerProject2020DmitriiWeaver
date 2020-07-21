@@ -18,7 +18,7 @@ function createCannonFactory(audio) {
 
     function emitBullet(cannon, gameContext,  level) {
         let dir = 1
-        for (const player of findPlayers(level.entities)) {
+        for (const player of findPlayers(level)) {
             if (player.pos.x > cannon.pos.x - HOLD_FIRE_THRESHHOLD
                 && player.pos.x < cannon.pos.x + HOLD_FIRE_THRESHHOLD) {
                 return

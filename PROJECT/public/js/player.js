@@ -1,6 +1,6 @@
 import Entity from './entity.js'
 import playerController from './traits/playerController.js'
-import Player from './traits/player.js'
+import player from './traits/player.js'
 
 
 
@@ -13,15 +13,14 @@ export function createPlayerEnv(playerEntity) {
     return playerEnv
 }
 
-export function makePlayer(entity, name){
-    const player = new Player()
-    player.name = "MARIO"
-    entity.addTrait(player)
+export function createPlayer(entity){
+    entity.addTrait(new player())
+    return entity
 }
 
-export function* findPlayers(entities) {
-    for(const entity of entities){
-        if(entity.traits.has(Player)){
+export function* findPlayers(level) {
+    for(const entity of level.entities){
+        if(entity.player){
             yield entity
         }
     }

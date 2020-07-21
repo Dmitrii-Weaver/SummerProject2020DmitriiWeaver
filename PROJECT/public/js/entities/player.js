@@ -23,27 +23,26 @@ export function loadPlayer(audioContext) {
 
 function createPlayerFactory(sprite, audio) {
     const runAnim = sprite.animations.get("run")
-
     function routeFrame(player) {
-        if (player.traits.get(Jump).falling) {
+        if (player.jump.falling) {
             return 'jump'
         }
-        if (player.traits.get(Go).distance > 0) {
-            if (player.vel.x > 0 && player.traits.get(Go).dir < 0 || player.vel.x < 0 && player.traits.get(Go).dir > 0) {
+        if (player.go.distance > 0) {
+            if (player.vel.x > 0 && player.go.dir < 0 || player.vel.x < 0 && player.go.dir > 0) {
                 return "break"
             }
 
-            return runAnim(player.traits.get(Go).distance)
+            return runAnim(player.go.distance)
         }
 
         return 'idle'
     }
     function setTurboState(turboOn) {
-        this.traits.get(Go).dragFactor = turboOn ? FAST_DRAG : SLOW_DRAG
+        this.go.dragFactor = turboOn ? FAST_DRAG : SLOW_DRAG
 
     }
     function drawplayer(context) {
-        sprite.draw(routeFrame(this), context, 0, 0, this.traits.get(Go).heading < 0)
+        sprite.draw(routeFrame(this), context, 0, 0, this.go.heading < 0)
     }
 
     return function createPlayer() {
@@ -57,8 +56,7 @@ function createPlayerFactory(sprite, audio) {
         player.addTrait(new Jump())
         player.addTrait(new Stomper())
         player.addTrait(new Killable())
-        
-        player.traits.get(Killable).removeAfter = 0
+        player.Killable.removeAfter = 0
 
 
         player.turbo = setTurboState
