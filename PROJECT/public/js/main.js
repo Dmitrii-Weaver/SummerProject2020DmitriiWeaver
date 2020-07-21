@@ -1,7 +1,5 @@
-
-import Level from './level.js'
 import Timer from './timer.js'
-import { createPlayer, createPlayerEnv } from './player.js'
+import { makePlayer, createPlayerEnv, findPlayers } from './player.js'
 import { createLevelLoader } from './loaders/levelloader.js';
 import { loadFont } from './loaders/font.js';
 import { loadEntities } from './entities.js'
@@ -11,8 +9,9 @@ import { createCollisionLayer } from './layers/collision.js'
 import { createDashboardLayer } from './layers/dashboard.js'
 import { createPlayerProgress } from './layers/PlayerProgress.js'
 import SceneRunner from './sceneRunner.js';
-import CompositionScene from './compositionScene.js'
-
+import TimedScene from './timedScene.js'
+import Scene from './scene.js';
+import { createTextLayer } from './layers/text.js'
 
 
 async function main(canvas) {
@@ -29,29 +28,40 @@ async function main(canvas) {
     const sceneRunner = new SceneRunner()
 
 
-    const player = createPlayer(entityFactory.player())
-    player.player.name = "MARIO"
+    const player = entityFactory.player()
+    makePlayer(player, "PLAYER")
+
+    window.player = player
 
 
     const inputRouter = setupKeyboard(window)
     inputRouter.addReceiver(player)
 
-    let shouldUpdate = false
+
+    const loadScreen = new Scene()
+    loadScreen.comp.layers.push(createColorLayer('#000'))
+    loadScreen.comp.layers.push(createTextLayer(font, `YOU ARE NOT MENT TO SEE IT`))
+    sceneRunner.addScene(loadScreen)
+
+    const next = () => {
+        window.removeEventListener('click', next)
+        sceneRunner.runNext()
+    }
+    window.addEventListener('click', next)
 
 
 
     async function runLevel(name) {
 
-        shouldUpdate = false
+
+
         const level = await loadLevel(name)
 
         level.events.listen(level.EVENT_TRIGGER, (spec, trigger, touches) => {
             if (spec.type === 'goto') {
-                for (const entity of touches) {
-                    if (entity.player) {
-                        runLevel(spec.name)
-                        return;
-                    }
+                for (const _ of findPlayers(touches)) {
+                    runLevel(spec.name)
+                    return;
                 }
             }
         })
@@ -65,7 +75,7 @@ async function main(canvas) {
         const playerEnv = createPlayerEnv(player)
         level.entities.add(playerEnv)
 
-        const waitScreen = new CompositionScene()
+        const waitScreen = new TimedScene()
         waitScreen.comp.layers.push(createColorLayer('#000'))
         waitScreen.comp.layers.push(dashboardLayer)
         waitScreen.comp.layers.push(playerProgressLayer)
@@ -76,7 +86,6 @@ async function main(canvas) {
         sceneRunner.addScene(level)
 
         sceneRunner.runNext()
-        shouldUpdate = true
 
     }
 
@@ -93,12 +102,12 @@ async function main(canvas) {
 
     timer.update = function update(deltaTime) {
         gameContext.deltaTime = deltaTime
-        if (shouldUpdate) {
-            sceneRunner.update(gameContext)
-        }
+
+        sceneRunner.update(gameContext)
+
     }
     timer.start()
-    runLevel('debug-progr')
+    runLevel('1-1')
     window.runLevel = runLevel
 }
 

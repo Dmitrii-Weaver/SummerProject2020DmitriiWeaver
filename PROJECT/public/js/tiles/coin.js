@@ -1,8 +1,10 @@
+import Player from "../traits/player.js"
 
 
 function handle({entity, match,resolver}){
-    if (entity.player) {
-        entity.player.addCoins(1)
+    const player = entity.traits.get(Player)
+    if (player) {
+        player.addCoins(1)
         const grid = resolver.matrix
         grid.delete(match.indexX, match.indexY)
     }

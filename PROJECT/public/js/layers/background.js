@@ -41,7 +41,7 @@ export function createBackgroundLayer(level,tiles, sprites) {
 
         context.drawImage(
             buffer,
-            -camera.pos.x % 16,
-            -camera.pos.y)
+            Math.floor(-camera.pos.x % 16),
+            Math.floor(-camera.pos.y))
     }
 }

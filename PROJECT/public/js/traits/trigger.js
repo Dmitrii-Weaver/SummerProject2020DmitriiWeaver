@@ -1,8 +1,9 @@
-import { Trait } from '../entity.js'
+import Trait from '../trait.js'
+
 
 export default class Trigger extends Trait {
     constructor() {
-        super('trigger')
+        super()
         
         this.touches = new Set()
         this.conditions = []
@@ -11,7 +12,6 @@ export default class Trigger extends Trait {
     collides(_,them){
         this.touches.add(them)
     }
-
 
     update(entity, gameContext, level) {
         if(this.touches.size>0){

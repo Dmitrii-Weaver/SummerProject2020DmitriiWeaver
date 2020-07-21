@@ -8,6 +8,7 @@ import { loadSpriteSheet } from './sprite.js'
 import { loadJSON } from '../loaders.js'
 import LevelTimer from '../traits/levelTimer.js';
 import Trigger from '../traits/trigger.js';
+import Trait from '../trait.js'
 
 function createTimer() {
     const timer = new Entity()
@@ -15,11 +16,33 @@ function createTimer() {
     return timer
 }
 
-function createTrigger() {
-    const entity = new Entity()
-    entity.addTrait(new Trigger)
-    return entity
+function createSpawner(){
+    class Spawner extends Trait{
+        constructor(){
+            super()
+            this.entities = []
+            this.offsetX = 64
+        }
+
+        addEntity(entity){
+            this.entities.push(entity)
+            this.entities.sort((a,b) => a.pos.x < b.pos.x ? -1 : 1)
+
+        }
+        update(entity, gameContext, level){
+            const cameraMaxX = level.camera.pos.x + level.camera.size.x + this.offsetX
+            while (this.entities[0]){
+                if (cameraMaxX > this.entities[0].pos.x){
+                    level.entities.add(this.entities.shift())
+                }
+                else break
+            }
+        }
+    }
+
+    return new Spawner()
 }
+
 
 function loadPattern(name) {
     return loadJSON(`/sprites/patterns/${name}.json`)
@@ -50,14 +73,19 @@ function setupBackgrounds(levelSpec, level, backgroundSprites, patterns) {
 }
 
 function setupEntities(levelSpec, level, entityFactory) {
-
+    const spawner = createSpawner()
     levelSpec.entities.forEach(({ name, pos: [x, y] }) => {
         const createEntity = entityFactory[name]
         const entity = createEntity()
         entity.pos.set(x, y)
-        level.entities.add(entity)
+        spawner.addEntity(entity)
 
     })
+
+    const entityProxy = new Entity()
+    entityProxy.addTrait(spawner)
+    level.entities.add(entityProxy)
+
     const spriteLayer = createSpriteLayer(level.entities)
     level.comp.layers.push(spriteLayer)
 }
@@ -65,11 +93,13 @@ function setupTriggers(levelSpec, level) {
     if (!levelSpec.triggers) {
         return
     }
-    for (const triggerSpec of levelSpec.triggers) {
-        const entity = createTrigger()
-        entity.trigger.conditions.push((entity, touches, gc, level) => {
+    for (const triggerSpec of levelSpec.triggers) {  
+        const trigger = new Trigger()
+        trigger.conditions.push((entity, touches, gc, level) => {
             level.events.emit(level.EVENT_TRIGGER, triggerSpec, entity, touches)
         })
+        const entity = new Entity()
+        entity.addTrait(trigger)
         entity.size.set(64,64)
         entity.pos.set(triggerSpec.pos[0], triggerSpec.pos[1])
         level.entities.add(entity)

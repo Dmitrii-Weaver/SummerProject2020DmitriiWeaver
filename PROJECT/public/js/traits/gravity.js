@@ -1,9 +1,7 @@
-import { Trait, Sides } from '../entity.js'
+import Trait from '../trait.js'
 
 export default class gravity extends Trait {
-    constructor() {
-        super('gravity')
-    }
+
 
     update(entity, {deltaTime}, level) {
 
