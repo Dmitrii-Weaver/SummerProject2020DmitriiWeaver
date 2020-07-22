@@ -37,10 +37,12 @@ async function main(canvas) {
     const inputRouter = setupKeyboard(window)
     inputRouter.addReceiver(player)
 
+    let shouldUpdate = false
+
 
     const loadScreen = new Scene()
     loadScreen.comp.layers.push(createColorLayer('#000'))
-    loadScreen.comp.layers.push(createTextLayer(font, `YOU ARE NOT MENT TO SEE IT`))
+    loadScreen.comp.layers.push(createTextLayer(font, `YOU ARE  MENT TO SEE IT`))
     sceneRunner.addScene(loadScreen)
 
     const next = () => {
@@ -53,7 +55,7 @@ async function main(canvas) {
 
     async function runLevel(name) {
 
-
+        shouldUpdate = false
 
         const level = await loadLevel(name)
 
@@ -87,6 +89,8 @@ async function main(canvas) {
 
         sceneRunner.runNext()
 
+        shouldUpdate = true
+
     }
 
     const gameContext = {
@@ -103,7 +107,9 @@ async function main(canvas) {
     timer.update = function update(deltaTime) {
         gameContext.deltaTime = deltaTime
 
+        if (shouldUpdate){
         sceneRunner.update(gameContext)
+    }
 
     }
     timer.start()

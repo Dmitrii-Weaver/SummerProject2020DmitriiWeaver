@@ -8,7 +8,7 @@ export default class Player extends Trait {
     constructor() {
         super()
         this.name = "UNNAMED"
-        this.coins = 0
+        this.acorns = 0
         this.lives = 3
         this.score = 0
 
@@ -17,11 +17,11 @@ export default class Player extends Trait {
         })
     }
     addCoins(count){
-        this.coins+=count
+        this.acorns+=count
         this.queue(entity => entity.sounds.add('coin'))
-        while (this.coins >=  COIN_LIVE_THRESHOLD){
+        while (this.acorns >=  COIN_LIVE_THRESHOLD){
            this.addLives(1)
-            this.coins -=  COIN_LIVE_THRESHOLD
+            this.acorns -=  COIN_LIVE_THRESHOLD
         }
     }
     addLives(count){

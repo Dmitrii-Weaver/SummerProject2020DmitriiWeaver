@@ -49,7 +49,7 @@ function createPlayerFactory(sprite, audio) {
     return function createPlayer() {
         const player = new Entity();
         player.audio = audio
-        player.size.set(14, 16)
+        player.size.set(28, 16)
 
         player.addTrait(new Go())
         player.addTrait(new Solid())

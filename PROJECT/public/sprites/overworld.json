@@ -11,6 +11,13 @@
             ]
         },
         {
+            "name": "ground-2",
+            "index": [
+                3,
+                0
+            ]
+        },
+        {
             "name": "sky",
             "index": [
                 3,
