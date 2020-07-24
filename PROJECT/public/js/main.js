@@ -22,6 +22,12 @@ async function main(canvas) {
         loadFont()
     ])
 
+    const gameContext = {
+        audioContext,
+        videoContext,
+        deltaTime: null,
+        entityFactory
+    }
 
     const loadLevel = await createLevelLoader(entityFactory)
 
@@ -72,9 +78,9 @@ async function main(canvas) {
         const dashboardLayer = createDashboardLayer(font, level)
 
 
-        player.pos.set(0, 0)
+        player.pos.set(32, 150)
         level.entities.add(player)
-        const playerEnv = createPlayerEnv(player)
+        const playerEnv = createPlayerEnv(player, gameContext)
         level.entities.add(playerEnv)
 
         const waitScreen = new TimedScene()
@@ -93,12 +99,7 @@ async function main(canvas) {
 
     }
 
-    const gameContext = {
-        audioContext,
-        videoContext,
-        deltaTime: null,
-        entityFactory
-    }
+
 
 
 

@@ -1,5 +1,5 @@
 import Trait from '../trait.js'
-
+import Player from './player.js'
 
 export default class Killable extends Trait {
     constructor() {
@@ -18,12 +18,14 @@ export default class Killable extends Trait {
         this.deltaTime = 0
     }
 
-    update(entity, {deltaTime}, level) {
+    update(entity, { deltaTime }, level) {
         if (this.dead) {
             this.deadTime += deltaTime
             if (this.deadTime > this.removeAfter) {
                 this.queue(() => {
+
                     level.entities.delete(entity)
+
                 })
             }
         }

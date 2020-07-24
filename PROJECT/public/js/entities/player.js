@@ -58,7 +58,7 @@ function createPlayerFactory(sprite, audio) {
         player.addTrait(new Stomper())
         player.addTrait(new Killable())
         
-        player.traits.get(Killable).removeAfter = Infinity
+        player.traits.get(Killable).removeAfter = 0
 
 
         player.turbo = setTurboState

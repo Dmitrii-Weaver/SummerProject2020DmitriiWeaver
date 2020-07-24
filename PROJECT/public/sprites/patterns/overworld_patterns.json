@@ -125,6 +125,25 @@
             }
         ]
     },
+    "pipe-6h": {
+        "tiles": [
+            {
+                "pattern": "pipe-5h",
+                "ranges": [
+                    [0, 1]
+                ]
+            },
+            {
+                "pattern": "pipe-cap-vert",
+                "ranges": [
+                    [
+                        
+                        0, 0
+                    ]
+                ]
+            }
+        ]
+    },
 
     "cannon-2h": {
         "tiles": [
@@ -140,6 +159,25 @@
                 "type": "ground",
                 "ranges": [
                     [0, 1]
+                ]
+            }
+        ]
+    },
+    "pipe-5h": {
+        "tiles": [
+            {
+                "pattern": "pipe-4h",
+                "ranges": [
+                    [0, 1]
+                ]
+            },
+            {
+                "pattern": "pipe-cap-vert",
+                "ranges": [
+                    [
+                        
+                        0, 0
+                    ]
                 ]
             }
         ]

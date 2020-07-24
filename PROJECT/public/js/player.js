@@ -4,9 +4,9 @@ import Player from './traits/player.js'
 
 
 
-export function createPlayerEnv(playerEntity) {
+export function createPlayerEnv(playerEntity, gameContext) {
     const playerEnv = new Entity()
-    const playerControl = new playerController()
+    const playerControl = new playerController(gameContext)
     playerControl.checkpoint.set(64, 64)
     playerControl.setPlayer(playerEntity)
     playerEnv.addTrait(playerControl)
@@ -17,6 +17,7 @@ export function makePlayer(entity, name){
     const player = new Player()
     player.name = "BOAR"
     entity.addTrait(player)
+    
 }
 
 export function* findPlayers(entities) {
