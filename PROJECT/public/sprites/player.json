@@ -1,59 +1,29 @@
 {
-    "imageURL": "/img/sheet1.png",
+    "imageURL": "/img/characters.gif",
     "frames": [
         {
             "name": "idle",
-            "rect": [
-                1,
-                8,
-                28,
-                19
-            ]
+            "rect": [275, 43, 16, 16]
         },
         {
             "name": "run-1",
-            "rect": [
-                162,
-                34,
-                28,
-                19
-            ]
+            "rect": [292, 43, 16, 16]
         },
         {
             "name": "run-2",
-            "rect": [
-                133,
-                34,
-                28,
-               19
-            ]
+            "rect": [308, 43, 16, 16]
         },
         {
             "name": "run-3",
-            "rect": [
-                104,
-                34,
-                28,
-                19
-            ]
+            "rect": [324, 43, 16, 16]
         },
         {
             "name": "break",
-            "rect": [
-                1,
-                8,
-                28,
-                19
-            ]
+            "rect": [275, 43, 16, 16]
         },
         {
             "name": "jump",
-            "rect": [
-                104,
-                34,
-                28,
-                19
-            ]
+            "rect": [356, 43, 16, 16]
         }
     ],
     "animations": [
