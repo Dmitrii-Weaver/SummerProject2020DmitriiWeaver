@@ -239,6 +239,15 @@
                     ]
                 },
                 {
+                    "name": "sign",
+                    "ranges": [
+                        [
+                            203,
+                            12
+                        ]
+                    ]
+                },
+                {
                     "name": "chocolate",
                     "type": "ground",
                     "ranges": [

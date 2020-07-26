@@ -1,5 +1,6 @@
 import { Sides } from '../entity.js'
 import Player from '../traits/player.js'
+import Killable from '../traits/killable.js';
 
 function handleX({entity, match}) {
 

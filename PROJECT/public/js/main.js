@@ -114,7 +114,7 @@ async function main(canvas) {
 
     }
     timer.start()
-    runLevel('1-1')
+    runLevel('1-2')
     window.runLevel = runLevel
 }
 

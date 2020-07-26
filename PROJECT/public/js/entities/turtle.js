@@ -6,6 +6,7 @@ import Solid from '../traits/solid.js'
 import physics from '../traits/physics.js'
 import Trait from '../trait.js'
 import Stomper from '../traits/stomper.js';
+import Player from '../traits/player.js';
 
 export function loadTurtle() {
     return loadSpriteSheet('turtle')
@@ -41,7 +42,18 @@ class behaviour extends Trait {
     }
     handleNudge(us, them) {
         if (this.state === STATE_WALKING) {
-            them.traits.get(Killable).kill()
+            if (them.traits.get(Player).lives == 0 && them.traits.get(Player).canDie == true) {
+                them.sounds.add('damage')
+                them.traits.get(Killable).kill()
+                location.reload();
+            }
+            else if (them.traits.get(Player).lives != 0 && them.traits.get(Player).canDie == true) {
+
+                them.traits.get(Player).lives--
+                them.sounds.add('damage')
+                them.vel.y = -100
+                them.traits.get(Player).undying()
+            }
         }
         else if (this.state === STATE_HIDING) {
             this.panic(us, them)
@@ -50,7 +62,18 @@ class behaviour extends Trait {
             const travelDir = Math.sign(us.vel.x)
             const impactDir = Math.sign(us.pos.x - them.pos.x)
             if (travelDir !== 0 && travelDir !== impactDir) {
-                them.traits.get(Killable).kill()
+                if (them.traits.get(Player).lives == 0 && them.traits.get(Player).canDie == true) {
+                    them.sounds.add('damage')
+                    them.traits.get(Killable).kill()
+                    location.reload();
+                }
+                else if ( them.traits.get(Player).lives != 0 && them.traits.get(Player).canDie == true){
+                    
+                    them.traits.get(Player).lives --
+                    them.sounds.add('damage')
+                    them.vel.y = -100
+                    them.traits.get(Player).undying()
+                }
 
             }
         }
@@ -73,7 +96,7 @@ class behaviour extends Trait {
     hide(us) {
         us.vel.x = 0
         us.traits.get(PendulumMove).enabled = false
-        if(this.walkSpeed === null){
+        if (this.walkSpeed === null) {
             this.walkSpeed = us.traits.get(PendulumMove).speed
         }
         this.hideTime = 0
@@ -107,12 +130,12 @@ function createTurtleFactory(sprite) {
 
     function routeAnim(turtle) {
         if (turtle.traits.get(behaviour).state == STATE_HIDING) {
-            if (turtle.traits.get(behaviour).hideTime > 3){
+            if (turtle.traits.get(behaviour).hideTime > 3) {
                 return wakeAnim(turtle.traits.get(behaviour).hideTime)
             }
             return "hiding"
         }
-        if (turtle.traits.get(behaviour).state === STATE_PANIC){
+        if (turtle.traits.get(behaviour).state === STATE_PANIC) {
             return "hiding"
         }
         return walkAnim(turtle.lifeTime)
