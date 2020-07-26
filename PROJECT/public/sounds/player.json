@@ -8,6 +8,9 @@
         },
         "coin":{
           "url" : "/aud/acorn.mp3"
+        },
+        "damage":{
+          "url" : "/aud/damage.mp3"
         }
     }
 }

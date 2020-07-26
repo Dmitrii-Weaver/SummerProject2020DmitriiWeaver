@@ -48,7 +48,7 @@ async function main(canvas) {
 
     const loadScreen = new Scene()
     loadScreen.comp.layers.push(createColorLayer('#000'))
-    loadScreen.comp.layers.push(createTextLayer(font, `YOU ARE  MENT TO SEE IT`))
+    loadScreen.comp.layers.push(createTextLayer(font, `BE A BOAR. DO THE ROAR.`))
     sceneRunner.addScene(loadScreen)
 
     const next = () => {
@@ -119,10 +119,4 @@ async function main(canvas) {
 }
 
 const canvas = document.getElementById('screen');
-const start = () => {
-    window.removeEventListener('click', start)
-    main(canvas)
-}
-window.addEventListener('click', start)
-
-
+main(canvas)

@@ -24,6 +24,30 @@
         {
             "name": "jump",
             "rect": [356, 43, 16, 16]
+        },
+        {
+            "name": "idle-undying",
+            "rect": [275, 60, 16, 16]
+        },
+        {
+            "name": "run-1-undying",
+            "rect": [292, 60, 16, 16]
+        },
+        {
+            "name": "run-2-undying",
+            "rect": [308, 60, 16, 16]
+        },
+        {
+            "name": "run-3-undying",
+            "rect": [324, 60, 16, 16]
+        },
+        {
+            "name": "break-undying",
+            "rect": [275, 60, 16, 16]
+        },
+        {
+            "name": "jump-undying",
+            "rect": [356, 60, 16, 16]
         }
     ],
     "animations": [
@@ -34,6 +58,15 @@
                 "run-1",
                 "run-2",
                 "run-3"
+            ]
+        },
+        {
+            "name": "run-undying",
+            "frameLen": 6,
+            "frames": [
+                "run-1-undying",
+                "run-2-undying",
+                "run-3-undying"
             ]
         }
     ]

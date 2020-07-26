@@ -7,6 +7,7 @@ import Go from '../traits/go.js'
 import { loadSpriteSheet } from '../loaders/sprite.js';
 import Killable from '../traits/killable.js';
 import { loadAudioBoard } from '../loaders/audio.js';
+import Player from '../traits/player.js';
 
 const FAST_DRAG = 1 / 5000
 const SLOW_DRAG = 1 / 1000
@@ -16,27 +17,46 @@ export function loadPlayer(audioContext) {
         loadSpriteSheet('player'),
         loadAudioBoard('player', audioContext)
     ])
-    .then(([sprite, audio]) => {
-        return createPlayerFactory(sprite, audio)
-    })
+        .then(([sprite, audio]) => {
+            return createPlayerFactory(sprite, audio)
+        })
 }
 
 function createPlayerFactory(sprite, audio) {
     const runAnim = sprite.animations.get("run")
+    const undyingRunAnim = sprite.animations.get("run-undying")
 
     function routeFrame(player) {
-        if (player.traits.get(Jump).falling) {
+        if (player.traits.get(Jump).falling && player.traits.get(Player).canDie == true && player.traits.get(Player).lives != 0) {
             return 'jump'
+        }
+        else if (player.traits.get(Jump).falling && player.traits.get(Player).canDie == false && player.traits.get(Player).lives == 0) {
+            return 'jump-undying'
         }
         if (player.traits.get(Go).distance > 0) {
             if (player.vel.x > 0 && player.traits.get(Go).dir < 0 || player.vel.x < 0 && player.traits.get(Go).dir > 0) {
-                return "break"
+                if (player.traits.get(Player).canDie == false || player.traits.get(Player).lives==1) {
+                    return "break-undying"
+                }
+                else {
+                    return "break"
+                }
             }
-
-            return runAnim(player.traits.get(Go).distance)
+            if ( player.traits.get(Player).canDie == false || player.traits.get(Player).lives == 0){
+                return undyingRunAnim(player.traits.get(Go).distance)
+            }
+            else if( player.traits.get(Player).canDie == true && player.traits.get(Player).lives != 0){
+                return runAnim(player.traits.get(Go).distance)
+            }
+            
         }
 
-        return 'idle'
+        if (player.traits.get(Player).canDie == true && player.traits.get(Player).lives != 0) {
+            return "idle"
+        }
+        else{
+            return "idle-undying"
+        }
     }
     function setTurboState(turboOn) {
         this.traits.get(Go).dragFactor = turboOn ? FAST_DRAG : SLOW_DRAG
@@ -57,7 +77,7 @@ function createPlayerFactory(sprite, audio) {
         player.addTrait(new Jump())
         player.addTrait(new Stomper())
         player.addTrait(new Killable())
-        
+
         player.traits.get(Killable).removeAfter = 0
 
 

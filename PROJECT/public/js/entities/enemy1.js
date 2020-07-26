@@ -25,12 +25,16 @@ class behaviour extends Trait {
                 us.traits.get(Killable).kill()
             }
             else {
+                
+               
                 if (them.traits.get(Player).lives == 0 && them.traits.get(Player).canDie == true) {
+                    them.sounds.add('damage')
                     them.traits.get(Killable).kill()
                 }
                 else if ( them.traits.get(Player).lives != 0 && them.traits.get(Player).canDie == true){
                     
                     them.traits.get(Player).lives --
+                    them.sounds.add('damage')
                     them.traits.get(Player).undying()
                 }
             }

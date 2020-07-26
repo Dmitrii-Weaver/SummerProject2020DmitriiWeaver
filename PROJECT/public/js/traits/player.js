@@ -32,6 +32,7 @@ export default class Player extends Trait {
     undying(){
         console.log('died')
         this.canDie = false
+        
         setTimeout(() => this.canDie = true, 3000);
         
     }
