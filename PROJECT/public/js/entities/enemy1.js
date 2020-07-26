@@ -6,6 +6,7 @@ import Solid from '../traits/solid.js'
 import physics from '../traits/physics.js'
 import Trait from '../trait.js'
 import Stomper from '../traits/stomper.js';
+import Player from '../traits/player.js';
 
 export function loadEnemy1() {
     return loadSpriteSheet('enemy1')
@@ -23,10 +24,17 @@ class behaviour extends Trait {
                 us.traits.get(PendulumMove).speed = 0
                 us.traits.get(Killable).kill()
             }
-            else{
-                them.traits.get(Killable).kill()
+            else {
+                if (them.traits.get(Player).lives == 0 && them.traits.get(Player).canDie == true) {
+                    them.traits.get(Killable).kill()
+                }
+                else if ( them.traits.get(Player).lives != 0 && them.traits.get(Player).canDie == true){
+                    
+                    them.traits.get(Player).lives --
+                    them.traits.get(Player).undying()
+                }
             }
-            
+
         }
     }
 }

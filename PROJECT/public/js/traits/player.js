@@ -11,6 +11,8 @@ export default class Player extends Trait {
         this.acorns = 0
         this.lives = 3
         this.score = 0
+        this.canDie = true
+        this.time = 0
 
         this.listen(Stomper.EVENT_STOMP, () => {
             this.score += 100
@@ -26,6 +28,12 @@ export default class Player extends Trait {
     }
     addLives(count){
         this.lives += count
+    }
+    undying(){
+        console.log('died')
+        this.canDie = false
+        setTimeout(() => this.canDie = true, 3000);
+        
     }
 
 }

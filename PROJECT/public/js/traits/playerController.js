@@ -19,23 +19,6 @@ export default class playerController extends Trait {
     update(entity, { deltaTime }, level,) {
 
 
-        for (const i of findPlayers(level.entities)) {
-            this.count++
-        }
-        if (this.count == 0 ) {
-            const player = this.gc.entityFactory.player()
-            makePlayer(player, 'BOAR')
-            player.pos.x = 100
-            player.pos.y = 32
-            player.vel.x = 0
-            player.vel.y = 0
-            level.entities.add(player)
-
-
-            const inputRouter = setupKeyboard(window)
-            inputRouter.addReceiver(player)
-        }
-        this.count = 0
     }
 }
 
