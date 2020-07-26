@@ -1,6 +1,6 @@
 {
-    "spriteSheet": "underworld",
-    "musicSheet": "underworld",
+    "spriteSheet": "overworld",
+    "musicSheet": "overworld",
 
     "patternSheet": "overworld_patterns",
 

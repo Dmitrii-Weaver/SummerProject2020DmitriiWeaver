@@ -30,11 +30,13 @@ class behaviour extends Trait {
                 if (them.traits.get(Player).lives == 0 && them.traits.get(Player).canDie == true) {
                     them.sounds.add('damage')
                     them.traits.get(Killable).kill()
+                    location.reload();
                 }
                 else if ( them.traits.get(Player).lives != 0 && them.traits.get(Player).canDie == true){
                     
                     them.traits.get(Player).lives --
                     them.sounds.add('damage')
+                    them.vel.y = -100
                     them.traits.get(Player).undying()
                 }
             }

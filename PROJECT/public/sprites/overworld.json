@@ -32,6 +32,13 @@
             ]
         },
         {
+            "name": "spikes",
+            "index": [
+                2,
+                0
+            ]
+        },
+        {
             "name": "bricks",
             "index": [
                 1,
