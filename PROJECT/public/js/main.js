@@ -89,7 +89,7 @@ async function main(canvas) {
         waitScreen.comp.layers.push(playerProgressLayer)
         sceneRunner.addScene(waitScreen)
 
-        level.comp.layers.push(createCollisionLayer(level))
+        //level.comp.layers.push(createCollisionLayer(level))
         level.comp.layers.push(dashboardLayer)
         sceneRunner.addScene(level)
 
@@ -114,7 +114,7 @@ async function main(canvas) {
 
     }
     timer.start()
-    runLevel('1-2')
+    runLevel('1-1')
     window.runLevel = runLevel
 }
 
